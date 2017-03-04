@@ -20,7 +20,7 @@ import (
 	"math"
 	"unsafe"
 
-	"github.com/EverythingMe/inbloom/go/internal/gomurmur"
+	"github.com/AlexStocks/inbloom/go/internal/gomurmur"
 )
 
 const denom = 0.480453013918201
@@ -164,14 +164,16 @@ func (f *BloomFilter) Marshal() []byte {
 // MarshalBase64 is a convenience method that dumps the filter's data to a base64 encoded string,
 // ready to be passed as an GET/POST parameter
 func (f *BloomFilter) MarshalBase64() string {
-	return base64.URLEncoding.EncodeToString(f.Marshal())
+	// return base64.URLEncoding.EncodeToString(f.Marshal())
+	return base64.StdEncoding.EncodeToString(f.Marshal())
 }
 
 // UnmarshalBase64 is a convenience function that unmarshals a filter that has been encoded into
 // a url parameter
 func UnmarshalBase64(b64 string) (*BloomFilter, error) {
 
-	if b, err := base64.URLEncoding.DecodeString(b64); err != nil {
+	// if b, err := base64.URLEncoding.DecodeString(b64); err != nil {
+	if b, err := base64.StdEncoding.DecodeString(b64); err != nil {
 		return nil, fmt.Errorf("bloom: could not decode base64 data: %s", err)
 	} else {
 		return Unmarshal(b)
